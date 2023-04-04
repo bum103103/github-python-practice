@@ -1,0 +1,29 @@
+# action.yml
+name: 'custom Github Action'
+description: 'A Gitub Action that takes an input and returns ...'.
+inputs:
+  num:
+    required:
+    defalut: "1"
+outputs:
+  num_squared:
+    value: ${{ steps.get-square.outputs.num_squared }}
+runs:
+  using: 'composite'
+  step:
+    - name: Install Python
+      uses: action/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: Install dependencies
+      run: pip install -r requirement.txt
+      shell: bash
+    - name: pass Inputs to shell
+      run : |
+        echo "INPUT_NUM=${{ inputs.num }}" >> $GITHUB.ENV
+      shell: bash
+    - name: Fetch the number's square
+      id: get-square
+      run: python src/get_num_square.py
+      shell: bash
+       
