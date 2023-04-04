@@ -1,0 +1,25 @@
+name: Test Action
+on: [push]
+
+jobs:
+  get-num-square:
+    runs-on: ubuntu-latest
+    name: Returns the number square
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Fetch num squared
+        id: get_square
+        run: echo "::set-output name=num_squared::$(($ * $))"
+        shell: bash
+        env:
+          GITHUB_TOKEN: $
+      - name: Print the square
+        run: echo "$"
+
+#다음과 같은 액션은 다음과 같은 일을 수행합니다.
+#- push 이벤트가 발생하면 실행됩니다.
+#- get-num-square 작업이 실행됩니다.
+#- Ubuntu 최신 버전에서 실행됩니다.
+#- num_squared 변수를 반환합니다.
+#- num_squared 변수는 입력 값 num의 제곱입니다.
